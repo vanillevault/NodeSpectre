@@ -1,1 +1,505 @@
-Current Date and Time (UTC - YYYY-MM-DD HH:MM:SS formatted): 2026-04-18 02:00:44
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NODESPECTRE // NVLL</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cyan: #00f5ff;
+    --cyan-dim: #00b8c4;
+    --bg: #030a0a;
+    --bg2: #060f0f;
+    --surface: #0a1a1a;
+    --text: #c8e6e6;
+    --text-dim: #557777;
+    --red: #ff2244;
+    --green: #00ff88;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .grid-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid rgba(0,245,255,0.1);
+    background: rgba(3,10,10,0.9);
+    backdrop-filter: blur(10px);
+  }
+  .logo {
+    font-family: 'VT323', monospace;
+    font-size: 1.8rem;
+    color: var(--cyan);
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px var(--cyan), 0 0 40px rgba(0,245,255,0.3);
+    animation: flicker 8s infinite;
+  }
+  .status-bar {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+  .status-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s infinite;
+    margin-right: 5px;
+  }
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
+    z-index: 1;
+  }
+  .hero-tag {
+    font-size: 0.7rem;
+    color: var(--cyan-dim);
+    letter-spacing: 6px;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+  .hero-title {
+    font-family: 'VT323', monospace;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.9;
+    color: var(--cyan);
+    text-shadow: 0 0 30px rgba(0,245,255,0.4), 0 0 80px rgba(0,245,255,0.1);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+    position: relative;
+  }
+  .hero-title::after {
+    content: 'NODESPECTRE';
+    position: absolute;
+    top: 4px; left: 4px;
+    color: var(--red);
+    opacity: 0.3;
+    z-index: -1;
+    animation: glitch 6s infinite;
+  }
+  .hero-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 300;
+    color: var(--text-dim);
+    margin-top: 1.5rem;
+    max-width: 600px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+  .hero-sub span { color: var(--cyan); font-weight: 600; }
+  .hero-coords {
+    margin-top: 2rem;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+  .terminal {
+    margin-top: 3rem;
+    background: var(--surface);
+    border: 1px solid rgba(0,245,255,0.15);
+    border-radius: 4px;
+    padding: 1.5rem;
+    max-width: 600px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .terminal::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    animation: scan 3s linear infinite;
+  }
+  .terminal-header { display: flex; gap: 6px; margin-bottom: 1rem; }
+  .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .t-dot:nth-child(1) { background: #ff5f56; }
+  .t-dot:nth-child(2) { background: #ffbd2e; }
+  .t-dot:nth-child(3) { background: #27c93f; }
+  .terminal-line { font-size: 0.8rem; line-height: 2; color: var(--text-dim); }
+  .terminal-line .prompt { color: var(--cyan); }
+  .terminal-line .output { color: var(--green); }
+  .terminal-line .comment { color: #445555; }
+  .cursor {
+    display: inline-block;
+    width: 8px; height: 14px;
+    background: var(--cyan);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label { font-size: 0.65rem; letter-spacing: 6px; color: var(--cyan-dim); margin-bottom: 0.5rem; }
+  .section-title {
+    font-family: 'VT323', monospace;
+    font-size: 3rem;
+    color: var(--text);
+    margin-bottom: 3rem;
+    border-bottom: 1px solid rgba(0,245,255,0.1);
+    padding-bottom: 1rem;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: rgba(0,245,255,0.05);
+    border: 1px solid rgba(0,245,255,0.1);
+  }
+  .service-card {
+    background: var(--bg2);
+    padding: 2rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card:hover { background: var(--surface); }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px; height: 0;
+    background: var(--cyan);
+    transition: height 0.3s;
+  }
+  .service-card:hover::before { height: 100%; }
+  .service-icon { font-family: 'VT323', monospace; font-size: 2.5rem; color: var(--cyan); opacity: 0.6; margin-bottom: 0.5rem; }
+  .service-name { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; letter-spacing: 2px; }
+  .service-desc { font-size: 0.75rem; color: var(--text-dim); line-height: 1.6; }
+  .service-status { margin-top: 1rem; font-size: 0.65rem; letter-spacing: 2px; }
+  .online { color: var(--green); }
+  .radio-block {
+    background: var(--surface);
+    border: 1px solid rgba(0,245,255,0.15);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .radio-block::after {
+    content: 'SIGNAL/VOID';
+    position: absolute;
+    right: -2rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'VT323', monospace;
+    font-size: 4rem;
+    color: rgba(0,245,255,0.04);
+    letter-spacing: 8px;
+    pointer-events: none;
+  }
+  .radio-title { font-family: 'VT323', monospace; font-size: 2.5rem; color: var(--cyan); text-shadow: 0 0 20px rgba(0,245,255,0.3); margin-bottom: 0.5rem; }
+  .radio-freq { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 4px; margin-bottom: 1.5rem; }
+  .radio-desc { font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: var(--text-dim); line-height: 1.8; max-width: 500px; }
+  .waveform { display: flex; align-items: center; gap: 3px; margin-top: 2rem; height: 40px; }
+  .wave-bar { width: 3px; background: var(--cyan); border-radius: 2px; opacity: 0.6; animation: wave 1.2s ease-in-out infinite; }
+  .wave-bar:nth-child(odd) { animation-delay: 0.1s; }
+  .wave-bar:nth-child(3n) { animation-delay: 0.3s; }
+  .wave-bar:nth-child(5n) { animation-delay: 0.5s; }
+  .dion-block { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+  @media (max-width: 768px) { .dion-block { grid-template-columns: 1fr; } }
+  .dion-text .tag {
+    display: inline-block;
+    background: rgba(0,245,255,0.08);
+    border: 1px solid rgba(0,245,255,0.2);
+    color: var(--cyan);
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .dion-title { font-family: 'VT323', monospace; font-size: 3.5rem; color: var(--text); line-height: 1; margin-bottom: 1rem; }
+  .dion-desc { font-family: 'Rajdhani', sans-serif; font-size: 1rem; color: var(--text-dim); line-height: 1.8; }
+  .dion-visual { background: var(--surface); border: 1px solid rgba(0,245,255,0.1); padding: 2rem; font-size: 0.75rem; line-height: 2; color: var(--text-dim); }
+  .dion-visual .highlight { color: var(--cyan); }
+  .dion-visual .val { color: var(--green); }
+  .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start; }
+  @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+  .about-text { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; color: var(--text-dim); line-height: 2; }
+  .about-text strong { color: var(--cyan); font-weight: 600; }
+  .about-meta { background: var(--surface); border-left: 2px solid var(--cyan); padding: 1.5rem; }
+  .meta-item { margin-bottom: 1rem; font-size: 0.75rem; }
+  .meta-label { color: var(--text-dim); letter-spacing: 2px; font-size: 0.6rem; display: block; margin-bottom: 0.2rem; }
+  .meta-value { color: var(--text); }
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(0,245,255,0.08);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+  .footer-logo { font-family: 'VT323', monospace; font-size: 1.2rem; color: var(--cyan); opacity: 0.4; }
+  .divider { border: none; border-top: 1px solid rgba(0,245,255,0.06); margin: 0; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @keyframes flicker { 0%, 95%, 100% { opacity: 1; } 96% { opacity: 0.6; } 97% { opacity: 1; } 98% { opacity: 0.4; } 99% { opacity: 1; } }
+  @keyframes glitch {
+    0%, 90%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+    91% { clip-path: inset(20% 0 60% 0); transform: translate(-4px, 2px); }
+    93% { clip-path: inset(60% 0 10% 0); transform: translate(4px, -2px); }
+    95% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 1px); }
+  }
+  @keyframes scan { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  @keyframes wave { 0%, 100% { height: 8px; } 50% { height: 35px; } }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <div class="logo">NODESPECTRE</div>
+  <div class="status-bar">
+    <span><span class="status-dot"></span>SISTEMAS ACTIVOS</span>
+    <span>ANDORRA // AD</span>
+    <span>NVLL OPS</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-tag">// PROYECTO DE INFRAESTRUCTURA INDEPENDIENTE</div>
+  <h1 class="hero-title">NODE<br>SPECTRE</h1>
+  <p class="hero-sub">
+    Una malla de infraestructura self-hosted construida sobre <span>coste cero</span>,
+    <span>autonomía total</span> y <span>perfil bajo</span>.
+    Operado desde Andorra por <span>NVLL</span>.
+  </p>
+  <div class="hero-coords">LAT 42.5° N // LON 1.5° E // ALT ~1000M ASL</div>
+  <div class="terminal">
+    <div class="terminal-header">
+      <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+    </div>
+    <div class="terminal-line"><span class="prompt">nvll@nodespectre:~$</span> uptime</div>
+    <div class="terminal-line"><span class="output">→ sistemas activos // headless // en línea</span></div>
+    <div class="terminal-line"><span class="prompt">nvll@nodespectre:~$</span> status --all</div>
+    <div class="terminal-line"><span class="output">→ radio ONLINE // proxy ONLINE // mesh ONLINE</span></div>
+    <div class="terminal-line"><span class="prompt">nvll@nodespectre:~$</span> whoami</div>
+    <div class="terminal-line"><span class="output">→ vanille. operador. constructor. <span class="comment">// suficiente.</span></span></div>
+    <div class="terminal-line"><span class="prompt">nvll@nodespectre:~$</span> <span class="cursor"></span></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<section>
+  <div class="section-label">// STACK ACTIVO</div>
+  <div class="section-title">SERVICIOS</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">[PRX]</div>
+      <div class="service-name">REVERSE PROXY</div>
+      <div class="service-desc">Enrutamiento interno con HTTPS automático. Control total sobre el tráfico entrante y saliente del nodo.</div>
+      <div class="service-status online">● ONLINE</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">[VPN]</div>
+      <div class="service-name">MESH PRIVADO</div>
+      <div class="service-desc">Red overlay cifrada. Conecta nodos y dispositivos edge sin exposición pública innecesaria.</div>
+      <div class="service-status online">● ONLINE</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">[AI]</div>
+      <div class="service-name">IA LOCAL</div>
+      <div class="service-desc">Inferencia de modelos de lenguaje sin depender de la nube. Los datos no salen del nodo.</div>
+      <div class="service-status online">● ONLINE</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">[BOT]</div>
+      <div class="service-name">CONTROL REMOTO</div>
+      <div class="service-desc">Gestión de infraestructura vía bot de Telegram. Ejecución de comandos desde cualquier lugar.</div>
+      <div class="service-status online">● ONLINE</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">[MON]</div>
+      <div class="service-name">MONITORIZACIÓN</div>
+      <div class="service-desc">Visibilidad en tiempo real del estado del nodo, recursos y salud del sistema.</div>
+      <div class="service-status online">● ONLINE</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">[TOR]</div>
+      <div class="service-name">ANONIMATO</div>
+      <div class="service-desc">Capa de privacidad integrada en la malla. Operación discreta cuando la situación lo requiere.</div>
+      <div class="service-status online">● ONLINE</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <div class="section-label">// EMISIÓN</div>
+  <div class="section-title">SIGNAL/VOID RADIO</div>
+  <div class="radio-block">
+    <div class="radio-title">◈ SIGNAL/VOID</div>
+    <div class="radio-freq">INTERNET STREAM // ICECAST2 + LIQUIDSOAP</div>
+    <p class="radio-desc">
+      Una radio por internet ecléctica que corre íntegramente en hardware de NodeSpectre.
+      Sin algoritmos. Sin anuncios. Sin comités de curación.
+      West Coast rap, Deftones, Portishead, trap, hardbass — lo que el operador decida.
+    </p>
+    <div class="waveform">
+      <div class="wave-bar" style="height:12px"></div>
+      <div class="wave-bar" style="height:25px"></div>
+      <div class="wave-bar" style="height:18px"></div>
+      <div class="wave-bar" style="height:35px"></div>
+      <div class="wave-bar" style="height:10px"></div>
+      <div class="wave-bar" style="height:28px"></div>
+      <div class="wave-bar" style="height:22px"></div>
+      <div class="wave-bar" style="height:15px"></div>
+      <div class="wave-bar" style="height:32px"></div>
+      <div class="wave-bar" style="height:8px"></div>
+      <div class="wave-bar" style="height:20px"></div>
+      <div class="wave-bar" style="height:30px"></div>
+      <div class="wave-bar" style="height:14px"></div>
+      <div class="wave-bar" style="height:26px"></div>
+      <div class="wave-bar" style="height:19px"></div>
+      <div class="wave-bar" style="height:35px"></div>
+      <div class="wave-bar" style="height:11px"></div>
+      <div class="wave-bar" style="height:24px"></div>
+      <div class="wave-bar" style="height:17px"></div>
+      <div class="wave-bar" style="height:29px"></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <div class="section-label">// PROYECTO AUTÓNOMO</div>
+  <div class="section-title">DION</div>
+  <div class="dion-block">
+    <div class="dion-text">
+      <div class="tag">TOTALMENTE AUTÓNOMO // AGENTE IA</div>
+      <div class="dion-title">PROYECTO<br>DION</div>
+      <p class="dion-desc">
+        Una presencia en Instagram donde un agente de IA habita al personaje Felix
+        de Bomb Rush Cyberfunk. Hace fotos en el juego, genera captions, publica —
+        todo sin intervención humana. Corriendo íntegramente en infraestructura NodeSpectre.
+        Sin manager. Sin horario. Sin humano en el loop.
+      </p>
+    </div>
+    <div class="dion-visual">
+      <div><span class="highlight">agente</span>: <span class="val">felix_nwamsterdam</span></div>
+      <div><span class="highlight">plataforma</span>: <span class="val">instagram</span></div>
+      <div><span class="highlight">origen</span>: <span class="val">bomb rush cyberfunk</span></div>
+      <div><span class="highlight">modo</span>: <span class="val">totalmente autónomo</span></div>
+      <div><span class="highlight">host</span>: <span class="val">nodespectre</span></div>
+      <div><span class="highlight">input_humano</span>: <span class="val" style="color:var(--red)">false</span></div>
+      <div><span class="highlight">estado</span>: <span class="val">slow burn discovery</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <div class="section-label">// OPERADOR</div>
+  <div class="section-title">NVLL</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        <strong>Vanille</strong>, también conocido como <strong>NVLL</strong>, es un operador
+        de infraestructura independiente de 19 años basado en <strong>Andorra</strong>.
+        NodeSpectre empezó como experimento personal — hardware heredado de familia,
+        reconvertido en un stack self-hosted completo.
+      </p>
+      <br>
+      <p>
+        La filosofía es simple: <strong>coste cero, autonomía total, perfil bajo</strong>.
+        Sin dependencia de la nube donde se pueda evitar. Sin vendor lock-in.
+        Sin exposición innecesaria. Construido desde cero, mantenido con intención.
+      </p>
+      <br>
+      <p>
+        Criado en un país donde todo el mundo se conoce y las reglas reales
+        no están escritas en ningún lado. Esa educación se nota en cómo está
+        construido NodeSpectre — pragmático, resourceful, y siempre un paso por delante.
+      </p>
+    </div>
+    <div class="about-meta">
+      <div class="meta-item">
+        <span class="meta-label">// UBICACIÓN</span>
+        <span class="meta-value">Andorra // AD</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">// OPERADOR</span>
+        <span class="meta-value">NVLL / Vanille</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">// FILOSOFÍA</span>
+        <span class="meta-value">Own your stack.</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">// DOMINIO</span>
+        <span class="meta-value">nodespectre.qzz.io</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">// ESTADO</span>
+        <span class="meta-value">Activo y expandiendo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">NVLL</div>
+  <div>NODESPECTRE.QZZ.IO // © 2026</div>
+  <div>ANDORRA // SELF-HOSTED</div>
+</footer>
+
+</body>
+</html>
