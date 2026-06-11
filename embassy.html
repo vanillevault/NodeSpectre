@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NVLL — Embassy Hub</title>
+  <link rel="stylesheet" href="css/gh0stnet.css">
+  <style>
+    .hero {
+      padding: 160px 32px 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 6vw, 64px);
+      color: var(--cyan);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      color: var(--text-dim);
+      max-width: 480px;
+      line-height: 1.8;
+    }
+
+    .relay-bar {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--text-dim);
+      background: #030303;
+      flex-wrap: wrap;
+    }
+
+    .relay-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nodes-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 32px;
+    }
+
+    .nodes-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .nodes-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .node-card {
+      background: var(--bg-node);
+      padding: 40px 32px;
+      transition: background 0.25s, border-left-color 0.25s;
+      border-left: 3px solid transparent;
+      text-decoration: none;
+      display: block;
+    }
+
+    .node-card:hover {
+      background: rgba(0,229,200,0.03);
+      border-left-color: var(--cyan);
+    }
+
+    .node-index {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+
+    .node-name {
+      font-size: 22px;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+
+    .node-description {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .node-badge {
+      font-size: 10px;
+      padding: 3px 10px;
+      border: 1px solid;
+      letter-spacing: 0.15em;
+      display: inline-block;
+    }
+
+    .badge-online {
+      color: var(--cyan);
+      border-color: rgba(0,229,200,0.3);
+    }
+
+    .badge-autonomous {
+      color: #7c3aed;
+      border-color: rgba(124,58,237,0.3);
+    }
+
+    .badge-broadcasting {
+      color: #f59e0b;
+      border-color: rgba(245,158,11,0.3);
+    }
+
+    .badge-classified {
+      color: var(--text-dim);
+      border-color: var(--border);
+    }
+
+    .about-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 32px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+
+    .about-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .about-text {
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 2;
+    }
+
+    .about-text p {
+      margin-bottom: 16px;
+    }
+
+    .f99 {
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+
+    .f99-code {
+      font-size: 11px;
+      color: var(--cyan);
+      margin-bottom: 12px;
+      letter-spacing: 0.1em;
+    }
+
+    .f99-text {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    .terminal-hint {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px 64px;
+    }
+
+    .hint-box {
+      background: #050505;
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    .hint-box span {
+      color: var(--cyan);
+    }
+
+    @media (max-width: 768px) {
+      .nodes-container {
+        grid-template-columns: 1fr;
+      }
+      .about-section {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .relay-bar {
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <span class="nav-logo">// NVLL — EMBASSY</span>
+    <ul class="nav-links">
+      <li><a href="index.html">terminal</a></li>
+      <li><a href="#nodes">nodes</a></li>
+      <li><a href="#about">about</a></li>
+    </ul>
+  </nav>
+
+  <!-- RELAY STATUS BAR -->
+  <div class="relay-bar">
+    <div class="relay-item">
+      <span class="relay-dot"></span>
+      <span>relay: nodespectre.pp.ua — 3ms</span>
+    </div>
+    <div class="relay-item">
+      <span>// VANX-NET: connected</span>
+    </div>
+    <div class="relay-item">
+      <span>// dead man's switch: inactive</span>
+    </div>
+    <div class="relay-item">
+      <span>// origin: Andorra</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-eyebrow">// nvll — embajada digital — 2024</p>
+    <h1 class="hero-title">NVLL<br>EMBASSY</h1>
+    <p class="hero-sub">// territorio digital del operador. no es un portfolio. es una infraestructura con lore. el que llega, llegó porque quería llegar.</p>
+  </div>
+
+  <!-- NODES -->
+  <div class="nodes-grid" id="nodes">
+    <p class="nodes-label">// nodos activos</p>
+
+    <div class="nodes-container">
+
+      <a href="nodes/nodespectre.html" class="node-card">
+        <p class="node-index">// [01]</p>
+        <h2 class="node-name">NodeSpectre</h2>
+        <p class="node-description">Infraestructura personal sobre hardware heredado. Core 2 Duo E7500, Debian 13 Trixie headless. Filosofía: cero coste, autonomía total, perfil bajo.</p>
+        <span class="node-badge badge-online">ONLINE</span>
+      </a>
+
+      <a href="nodes/signal.html" class="node-card">
+        <p class="node-index">// [02]</p>
+        <h2 class="node-name">SIGNAL/VOID</h2>
+        <p class="node-description">Radio algorítmica autónoma. Emite sin intervención humana. West Coast rap, Deftones, hardbass, Portishead. ghostnet.ismyradio.com</p>
+        <span class="node-badge badge-broadcasting">BROADCASTING</span>
+      </a>
+
+      <a href="nodes/dion.html" class="node-card">
+        <p class="node-index">// [03]</p>
+        <h2 class="node-name">DION</h2>
+        <p class="node-description">Agente IA autónomo que habita un personaje de videojuego. Juega solo, genera contenido, publica en Instagram sin intervención. @f3lix_nwamsterdam</p>
+        <span class="node-badge badge-autonomous">AUTONOMOUS</span>
+      </a>
+
+      <a href="nodes/music.html" class="node-card">
+        <p class="node-index">// [04]</p>
+        <h2 class="node-name">VΛNILLE NOIR</h2>
+        <p class="node-description">Proyecto musical. EPs en YouTube. "Spectre sur Mesure" y "L'Empire ne Tombe Pas". Drill español/francés. Contacto de festival belga.</p>
+        <span class="node-badge badge-online">ACTIVE</span>
+      </a>
+
+      <a href="nodes/muro.html" class="node-card">
+        <p class="node-index">// [05]</p>
+        <h2 class="node-name">Muro de Bellós</h2>
+        <p class="node-description">Pueblo abandonado heredado en los Pirineos de Huesca. Renovación privada en curso. Monetización a través de visitas escolares.</p>
+        <span class="node-badge badge-online">OPERATIONAL</span>
+      </a>
+
+      <a href="nodes/vault.html" class="node-card" id="vault-card" style="opacity:0.4">
+        <p class="node-index">// [██]</p>
+        <h2 class="node-name">████████</h2>
+        <p class="node-description">// acceso restringido. este nodo no está en el menú.</p>
+        <span class="node-badge badge-classified">CLASSIFIED</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="about-section" id="about">
+    <div>
+      <p class="about-label">// sobre el operador</p>
+      <div class="about-text">
+        <p>NVLL. Vanille. Adrián. Tres nombres, un operador.</p>
+        <p>Andorra como base. NodeSpectre como infraestructura. gh0stnet como idioma.</p>
+        <p>19 años. Hardware heredado. Filosofía de cero coste y autonomía total. Todo lo que ves aquí fue construido solo.</p>
+        <p>"I sound familiar and you don't know why."</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="about-label">// F99.NV</p>
+      <div class="f99">
+        <p class="f99-code">Vanille Syndrome — F99.NV</p>
+        <p class="f99-text">Trastorno adaptativo de perfil elevado caracterizado por disociación funcional entre capacidad empática excepcional e inversión emocional propia deliberadamente limitada.</p>
+        <br>
+        <p class="f99-text">// Primer caso documentado. Andorra, 2024.</p>
+        <p class="f99-text">// No tiene cura porque no es una enfermedad.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMINAL HINT -->
+  <div class="terminal-hint">
+    <div class="hint-box">
+      <span>nvll@embassy:~$</span> hay un nodo que no está en el menú. si sabes buscarlo, ya sabes cómo entrar. <a href="index.html">→ terminal</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>// NVLL EMBASSY — gh0stnet infrastructure</span>
+    <span>origin: Andorra — relay: <span style="color:var(--cyan)">3ms ✓</span></span>
+  </footer>
+
+  <script>
+    // easter egg: konami code → vault
+    let keys = [];
+    const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    document.addEventListener('keydown', e => {
+      keys.push(e.key);
+      keys = keys.slice(-10);
+      if (JSON.stringify(keys) === JSON.stringify(KONAMI)) {
+        window.location.href = 'nodes/vault.html';
+      }
+    });
+
+    // vault card opacity on hover
+    const vault = document.getElementById('vault-card');
+    if (vault) {
+      vault.addEventListener('mouseenter', () => vault.style.opacity = '0.7');
+      vault.addEventListener('mouseleave', () => vault.style.opacity = '0.4');
+    }
+  </script>
+</body>
+</html>
