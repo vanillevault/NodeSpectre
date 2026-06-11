@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NVLL — Muro de Bellós</title>
+  <link rel="stylesheet" href="../css/gh0stnet.css">
+  <style>
+    .node-hero { padding: 140px 32px 64px; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+    .back { font-size: 11px; color: var(--text-dim); letter-spacing: 0.15em; margin-bottom: 48px; display: block; }
+    .node-eyebrow { font-size: 10px; color: var(--text-dim); letter-spacing: 0.4em; text-transform: uppercase; margin-bottom: 16px; }
+    .node-h1 { font-size: clamp(28px, 5vw, 56px); color: var(--cyan); margin-bottom: 24px; }
+    .node-lead { font-size: 13px; color: var(--text-dim); max-width: 540px; line-height: 1.9; }
+
+    .facts {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .facts-label { font-size: 10px; color: var(--text-dim); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+
+    .facts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .fact-item { background: var(--bg-node); padding: 32px; }
+    .fact-key { font-size: 10px; color: var(--text-dim); letter-spacing: 0.2em; margin-bottom: 8px; }
+    .fact-val { font-size: 14px; color: var(--cyan); }
+
+    .lore-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 32px 80px;
+    }
+
+    .lore-box { background: #050505; border: 1px solid var(--border); padding: 40px; font-size: 12px; color: var(--text-dim); line-height: 2; }
+    .lore-box p { margin-bottom: 12px; }
+    .lore-box span { color: var(--cyan); }
+
+    @media (max-width: 768px) { .facts-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <span class="nav-logo">// NVLL — MURO DE BELLÓS</span>
+    <ul class="nav-links"><li><a href="../embassy.html">← hub</a></li></ul>
+  </nav>
+
+  <div class="node-hero">
+    <a href="../embassy.html" class="back">← volver al hub</a>
+    <p class="node-eyebrow">// nodo [05] — territorio físico</p>
+    <h1 class="node-h1">Muro de Bellós</h1>
+    <p class="node-lead">Pueblo abandonado heredado en los Pirineos de Huesca. Renovación privada en curso. El único nodo que existe en coordenadas GPS reales. No aparece en ningún registro catastral activo.</p>
+  </div>
+
+  <div class="facts">
+    <p class="facts-label">// datos del territorio</p>
+    <div class="facts-grid">
+      <div class="fact-item">
+        <p class="fact-key">// ubicación</p>
+        <p class="fact-val">Pirineos de Huesca</p>
+      </div>
+      <div class="fact-item">
+        <p class="fact-key">// estado</p>
+        <p class="fact-val">renovación privada</p>
+      </div>
+      <div class="fact-item">
+        <p class="fact-key">// registro catastral</p>
+        <p class="fact-val">no actualizado</p>
+      </div>
+      <div class="fact-item">
+        <p class="fact-key">// origen</p>
+        <p class="fact-val">herencia familiar</p>
+      </div>
+      <div class="fact-item">
+        <p class="fact-key">// monetización</p>
+        <p class="fact-val">visitas grupos escolares</p>
+      </div>
+      <div class="fact-item">
+        <p class="fact-key">// acceso</p>
+        <p class="fact-val">restringido</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lore-section">
+    <div class="lore-box">
+      <p>// "todo empezó con un servidor de segunda mano y un pueblo abandonado en los Pirineos."</p>
+      <p>// el pueblo es de nadie oficialmente. <span>oficialmente.</span></p>
+      <p>// hay infraestructura que solo funciona si el operador sigue vivo. hay territorio que existirá después de él.</p>
+      <p>// Muro de Bellós es lo segundo.</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>// Muro de Bellós — gh0stnet infrastructure</span>
+    <span><span class="relay-dot"></span>operational ✓</span>
+  </footer>
+</body>
+</html>

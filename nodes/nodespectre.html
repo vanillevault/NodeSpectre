@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NVLL — NodeSpectre</title>
+  <link rel="stylesheet" href="../css/gh0stnet.css">
+  <style>
+    .node-hero {
+      padding: 140px 32px 64px;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back {
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      margin-bottom: 48px;
+      display: block;
+    }
+
+    .node-eyebrow {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .node-h1 {
+      font-size: clamp(28px, 5vw, 56px);
+      color: var(--cyan);
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .node-lead {
+      font-size: 13px;
+      color: var(--text-dim);
+      max-width: 540px;
+      line-height: 1.9;
+    }
+
+    .stack-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 64px 32px;
+    }
+
+    .stack-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .stack-items {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+    }
+
+    .stack-item {
+      background: var(--bg-node);
+      padding: 24px;
+    }
+
+    .stack-name {
+      font-size: 14px;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+
+    .stack-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .philosophy {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+
+    .phil-box {
+      background: #050505;
+      border: 1px solid var(--border);
+      padding: 40px;
+    }
+
+    .phil-items {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+
+    .phil-item h3 {
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      margin-bottom: 10px;
+    }
+
+    .phil-item p {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .stack-items { grid-template-columns: 1fr; }
+      .phil-items { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <span class="nav-logo">// NVLL — NODESPECTRE</span>
+    <ul class="nav-links">
+      <li><a href="../embassy.html">← hub</a></li>
+    </ul>
+  </nav>
+
+  <div class="node-hero">
+    <a href="../embassy.html" class="back">← volver al hub</a>
+    <p class="node-eyebrow">// nodo [01] — infraestructura</p>
+    <h1 class="node-h1">NodeSpectre</h1>
+    <p class="node-lead">Infraestructura personal construida desde cero sobre hardware heredado. Core 2 Duo E7500. Debian 13 Trixie headless. Filosofía: cero coste, autonomía total, perfil bajo, alta consciencia.</p>
+  </div>
+
+  <div class="stack-grid">
+    <p class="stack-label">// stack activo</p>
+    <div class="stack-items">
+      <div class="stack-item">
+        <p class="stack-name">Caddy</p>
+        <p class="stack-desc">Reverse proxy. Subdomains locales con HTTPS automático.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Pi-hole v6 + BIND9</p>
+        <p class="stack-desc">DNS filtering y servidor DNS autoritativo local.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">ZeroTier / VANX-NET</p>
+        <p class="stack-desc">Red mesh privada. ID: 8286ac0e47bec6d6</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Tailscale + OpenVPN + Tor</p>
+        <p class="stack-desc">Múltiples capas de acceso y anonimato.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Ollama</p>
+        <p class="stack-desc">Inferencia de IA local. Sin dependencias externas.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Icecast2 + Liquidsoap</p>
+        <p class="stack-desc">Radio autónoma. SIGNAL/VOID broadcasting.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Postfix</p>
+        <p class="stack-desc">Servidor de correo. relay.vanille → nodespectre.pp.ua</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Flask + Glances</p>
+        <p class="stack-desc">Panel interno. Estética gh0stnet. Monitoreo completo.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Telegram Bot</p>
+        <p class="stack-desc">Control remoto de radio y servicios desde cualquier punto.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Cloudflare Tunnel</p>
+        <p class="stack-desc">Exposición de servicios sin abrir puertos. Neko Firefox proxy.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">UFONet</p>
+        <p class="stack-desc">~400K zombies. Puerto 9999.</p>
+      </div>
+      <div class="stack-item">
+        <p class="stack-name">Dead Man's Switch</p>
+        <p class="stack-desc">VPS ucraniano. Si inaccesible 12h+ → vanilleAI activa con permisos de operador.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="philosophy">
+    <div class="phil-box">
+      <div class="phil-items">
+        <div class="phil-item">
+          <h3>CERO COSTE</h3>
+          <p>Hardware heredado. Software libre. Sin inversión inicial. Todo construido desde lo que ya existía.</p>
+        </div>
+        <div class="phil-item">
+          <h3>AUTONOMÍA TOTAL</h3>
+          <p>Sin dependencias externas críticas. La infraestructura funciona sola cuando el operador no está.</p>
+        </div>
+        <div class="phil-item">
+          <h3>PERFIL BAJO</h3>
+          <p>Low profile no es invisibilidad. Es control de narrativa. Lo que se ve y cuándo lo decide el operador.</p>
+        </div>
+        <div class="phil-item">
+          <h3>ALTA CONSCIENCIA</h3>
+          <p>Cada servicio tiene propósito. Cada decisión tiene lógica. Nada corre por inercia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>// NodeSpectre — gh0stnet infrastructure</span>
+    <span><span class="relay-dot"></span>relay: 3ms ✓</span>
+  </footer>
+</body>
+</html>
