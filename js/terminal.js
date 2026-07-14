@@ -96,7 +96,7 @@ const BOOT_SEQUENCE = [
   '// gh0stnet infrastructure — Andorra',
   '// ─────────────────────────────────',
   '// initializing...',
-  '// relay check: nodespectre.pp.ua... 3ms ✓',
+  '// relay check: nodespectrum.pp.ua... 3ms ✓',
   '// dead man\'s switch: inactive ✓',
   '// VANX-NET: connected ✓',
   '// ─────────────────────────────────',
