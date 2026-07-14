@@ -20,7 +20,7 @@ const COMMANDS = {
     response: [
       '// initiating connection...',
       '// routing through VANX-NET mesh...',
-      '// relay: nodespectre.pp.ua — 3ms ✓',
+      '// relay: nodespectrum.pp.ua — 3ms ✓',
       '// ZeroTier handshake: OK',
       '// dead man\'s switch: inactive',
       '',
