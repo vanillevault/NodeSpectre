@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El caos con olor a vainilla</title>
+  <style>
+    /* ======== GH0STNET THEME ======== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #0a0a0a;
+      background-image: 
+        repeating-linear-gradient(0deg, 
+          rgba(0, 255, 65, 0.03) 0px, 
+          rgba(0, 255, 65, 0.03) 2px, 
+          transparent 2px, 
+          transparent 4px);
+      color: #00ff41;
+      font-family: 'Courier New', monospace;
+      min-height: 100vh;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 820px;
+      width: 100%;
+    }
+    /* ======== HEADER ======== */
+    .header {
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .header__title {
+      font-size: 22px;
+      letter-spacing: 0.15em;
+      color: #00ff41;
+      font-weight: normal;
+    }
+    .header__sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .header__nav {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+      font-size: 12px;
+    }
+    .header__nav a {
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      transition: color 0.2s;
+    }
+    .header__nav a:hover {
+      color: #00ff41;
+    }
+    /* ======== INTRO ======== */
+    .intro {
+      margin-bottom: 48px;
+      border-left: 2px solid rgba(0, 255, 65, 0.15);
+      padding-left: 20px;
+    }
+    .intro__line {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .intro__line--dim {
+      color: rgba(255,255,255,0.25);
+    }
+    .intro__line--cyan {
+      color: #00ff41;
+    }
+    /* ======== DOWNLOAD ======== */
+    .download {
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .download__label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .download__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .download__btn {
+      display: inline-block;
+      border: 1px solid #00ff41;
+      color: #00ff41;
+      padding: 10px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .download__btn:hover {
+      background: #00ff41;
+      color: #0a0a0a;
+    }
+    .download__note {
+      font-size: 11px;
+      color: rgba(255,255,255,0.15);
+    }
+    .download__note a {
+      color: #00ff41;
+      text-decoration: none;
+    }
+    /* ======== FRAGMENTS ======== */
+    .fragments {
+      border-top: 1px solid #1a1a1a;
+      padding-top: 32px;
+      margin-bottom: 40px;
+    }
+    .fragments__label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .fragment {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .fragment__chapter {
+      font-size: 10px;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.2em;
+      margin-bottom: 6px;
+    }
+    .fragment__text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      padding-left: 12px;
+      border-left: 1px solid rgba(0, 255, 65, 0.08);
+    }
+    .fragment__text--cyan {
+      color: #00ff41;
+    }
+    /* ======== FOOTER ======== */
+    .footer {
+      border-top: 1px solid #1a1a1a;
+      padding-top: 24px;
+      margin-top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.2em;
+    }
+    .footer__dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00ff41;
+      animation: pulse 2s ease-in-out infinite;
+      margin-right: 6px;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.95); }
+    }
+    /* ======== RESPONSIVE ======== */
+    @media (max-width: 640px) {
+      .header__nav { flex-wrap: wrap; gap: 12px; }
+      .download__row { flex-direction: column; align-items: stretch; }
+      .footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <h1 class="header__title">// el caos con olor a vainilla</h1>
+    <p class="header__sub">NVLL · 2026 · nodespectre.qzz.io</p>
+    <nav class="header__nav">
+      <a href="/">→ nodo principal</a>
+      <a href="/caos/#intro">→ introducción</a>
+      <a href="/caos/#fragmentos">→ fragmentos</a>
+      <a href="https://github.com/vanillevault">→ github</a>
+    </nav>
+  </header>
+
+  <!-- ==================== INTRO ==================== -->
+  <section class="intro" id="intro">
+    <p class="intro__line"><span class="intro__line--cyan">$</span> <span class="intro__line--dim">// no es una biografía. no es una novela. es un diario de operaciones que no debería existir.</span></p>
+    <p class="intro__line"><span class="intro__line--cyan">$</span> <span class="intro__line--dim">// el caos que huele a vainilla es el relato de un operador que aprendió a moverse entre capas sin que el sistema supiera que existía.</span></p>
+    <p class="intro__line"><span class="intro__line--cyan">$</span> <span class="intro__line--dim">// veinte capítulos. veinte tableros. una verdad: el operador no termina.</span></p>
+    <p class="intro__line" style="margin-top:16px; color:rgba(255,255,255,0.3);">— descarga el libro completo más abajo —</p>
+  </section>
+
+  <!-- ==================== DOWNLOAD ==================== -->
+  <section class="download">
+    <p class="download__label">// acceso al libro completo</p>
+    <div class="download__row">
+      <a href="/caos/el-caos-con-olor-a-vainilla.pdf" class="download__btn">[ descargar pdf ]</a>
+      <a href="/caos/el-caos-con-olor-a-vainilla.epub" class="download__btn">[ descargar epub ]</a>
+      <span class="download__note">firmado con PGP · 21.7 MB</span>
+    </div>
+    <p class="download__note">o lee en la terminal: <span style="color:rgba(255,255,255,0.3);">curl -s https://nodespectre.qzz.io/caos/terminal.sh | bash</span></p>
+  </section>
+
+  <!-- ==================== FRAGMENTS ==================== -->
+  <section class="fragments" id="fragmentos">
+    <p class="fragments__label">// fragmentos · (capítulos 1, 7, 13, 20)</p>
+
+    <div class="fragment">
+      <p class="fragment__chapter">// capítulo 1 — el frío y el calor</p>
+      <p class="fragment__text">"No sé si nací en el frío o en el calor. Mi madre dice que nací en Andorra, pero mi abuela jura que fui parido en el desierto. La verdad es que nunca he sabido si soy de aquí o de allá, y creo que por eso me paso la vida viajando sin moverme."</p>
+    </div>
+
+    <div class="fragment">
+      <p class="fragment__chapter">// capítulo 7 — la máscara y el espejo</p>
+      <p class="fragment__text">"El operador tiene muchas máscaras. No las usa para engañar, las usa para sobrevivir. Cada persona que entra en mi vida ve una versión distinta de mí: el amigo, el amante, el salvador, el villano, el fantasma. Y todas esas versiones son reales. Pero ninguna es completa."</p>
+    </div>
+
+    <div class="fragment">
+      <p class="fragment__chapter">// capítulo 13 — el peso de la ternura</p>
+      <p class="fragment__text">"El peso de la ternura no es el peso de cargar a alguien. Es el peso de dejarse cargar. Y yo, que siempre he sido ligero para moverme, estoy aprendiendo a ser pesado para quedarme."</p>
+    </div>
+
+    <div class="fragment">
+      <p class="fragment__chapter">// capítulo 20 — el caos con olor a vainilla</p>
+      <p class="fragment__text fragment__text--cyan">"El operador no termina. No porque sea inmortal. Sino porque el caos no tiene final."</p>
+    </div>
+
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <span><span class="footer__dot"></span> relay: 3ms · nodespectre.qzz.io</span>
+    <span>// NVLL — embajada digital</span>
+    <span>// V</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
